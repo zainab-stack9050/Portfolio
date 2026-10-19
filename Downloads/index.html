@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier Grid — Digital Craft Studio</title>
+<meta name="description" content="A studio that builds digital experiences the way architects build buildings: research, blueprint, structure, finish.">
+
+<!-- Fonts: Montserrat (headlines) + Open Sans (body) — max 2 families, 3 weights each, per brief -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ DESIGN TOKENS ============ */
+  :root{
+    --mocha: #A47764;      /* Mocha Mousse — Stability */
+    --mocha-dark: #7C5A49;
+    --ethereal: #A0D4E0;   /* Ethereal Blue — Trust */
+    --ethereal-dark: #6FAFC0;
+    --moonlit: #F2F0EA;    /* Moonlit Grey — Refinement */
+    --ink: #362A22;        /* deep warm brown for text, not pure black */
+    --ink-soft: #6B5B4F;
+    --accent: #C96A3D;     /* burnt terracotta, echoes the deck's orange accent */
+    --paper: #FBFAF7;
+    --line: rgba(54,42,34,0.14);
+
+    --font-display: 'Montserrat', sans-serif;
+    --font-body: 'Open Sans', sans-serif;
+
+    --space-s: clamp(0.75rem, 0.6rem + 0.6vw, 1.1rem);
+    --space-m: clamp(1.5rem, 1.1rem + 1.6vw, 2.75rem);
+    --space-l: clamp(2.5rem, 1.8rem + 3vw, 5rem);
+    --space-xl: clamp(4rem, 2.8rem + 5vw, 8rem);
+
+    --radius: 14px;
+    --container: 1180px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    font-family: var(--font-body);
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.6;
+  }
+
+  h1,h2,h3,.logo{
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  a{ color: inherit; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{
+    width: min(100% - 2.5rem, var(--container));
+    margin-inline: auto;
+  }
+
+  :focus-visible{
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:.5em;
+    font-family: var(--font-body);
+    font-weight:700;
+    font-size: 0.95rem;
+    padding: 0.85em 1.6em;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    cursor:pointer;
+    text-decoration:none;
+    transition: transform .18s ease, background .18s ease, color .18s ease;
+  }
+  .btn-primary{ background: var(--ink); color: var(--moonlit); }
+  .btn-primary:hover{ background: var(--accent); transform: translateY(-2px); }
+  .btn-ghost{ background: transparent; border-color: var(--ink); color: var(--ink); }
+  .btn-ghost:hover{ background: var(--ink); color: var(--moonlit); transform: translateY(-2px); }
+
+  .eyebrow{
+    font-family: var(--font-body);
+    font-weight:700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.75rem;
+    color: var(--mocha-dark);
+  }
+
+  /* ============ HEADER / NAV (Flexbox — micro component) ============ */
+  header{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(251,250,247,0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-row{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding-block: var(--space-s);
+  }
+  .logo{ font-size: 1.15rem; display:flex; align-items:center; gap:.5em; }
+  .logo span{ color: var(--accent); }
+
+  .nav-links{
+    display:none;
+    list-style:none;
+    margin:0; padding:0;
+    gap: var(--space-m);
+    font-weight:600;
+    font-size: 0.95rem;
+  }
+  .nav-links a{ text-decoration:none; padding: .3em 0; border-bottom: 2px solid transparent; }
+  .nav-links a:hover{ border-color: var(--accent); }
+
+  .nav-actions{ display:flex; align-items:center; gap: var(--space-s); }
+
+  .menu-toggle{
+    background:none; border:none; cursor:pointer;
+    display:flex; flex-direction:column; gap:5px;
+    padding: .4em;
+  }
+  .menu-toggle span{ width:22px; height:2px; background: var(--ink); display:block; }
+
+  .mobile-panel{
+    display:none;
+    flex-direction:column;
+    gap: 1rem;
+    padding-block: var(--space-s) var(--space-m);
+    border-top: 1px solid var(--line);
+    font-weight:600;
+  }
+  .mobile-panel.open{ display:flex; }
+  .mobile-panel a{ text-decoration:none; }
+
+  @media (min-width: 768px){
+    .nav-links{ display:flex; }
+    .menu-toggle{ display:none; }
+    .mobile-panel{ display:none !important; }
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding-block: var(--space-xl) var(--space-l);
+    background: linear-gradient(180deg, var(--moonlit) 0%, var(--paper) 100%);
+  }
+  /* blueprint grid texture, echoing the deck's own visual language */
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at top right, black 10%, transparent 70%);
+    opacity: 0.6;
+    pointer-events:none;
+  }
+  .hero-inner{
+    position:relative;
+    display:grid;
+    gap: var(--space-l);
+    grid-template-columns: 1fr;
+    align-items:center;
+  }
+  .hero h1{
+    font-size: clamp(2.1rem, 1.5rem + 3.2vw, 3.6rem);
+    margin-block: var(--space-s);
+  }
+  .hero h1 em{ font-style:normal; color: var(--mocha-dark); }
+  .hero p.lead{
+    font-size: clamp(1rem, 0.9rem + 0.4vw, 1.15rem);
+    color: var(--ink-soft);
+    max-width: 46ch;
+  }
+  .hero-ctas{ display:flex; flex-wrap:wrap; gap: var(--space-s); margin-top: var(--space-m); }
+
+  .blueprint-card{
+    position:relative;
+    background: var(--ink);
+    color: var(--moonlit);
+    border-radius: var(--radius);
+    padding: var(--space-m);
+    aspect-ratio: 4/3;
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .blueprint-card .corner{ position:absolute; width:18px; height:18px; border: 2px solid var(--ethereal); }
+  .blueprint-card .corner.tl{ top:10px; left:10px; border-right:none; border-bottom:none; }
+  .blueprint-card .corner.br{ bottom:10px; right:10px; border-left:none; border-top:none; }
+  .blueprint-card .tag{ font-size: 0.7rem; letter-spacing:.12em; text-transform:uppercase; color: var(--ethereal); font-weight:700; }
+  .blueprint-card .measure{ font-family: var(--font-display); font-size: clamp(1.3rem, 1rem + 1.5vw, 2rem); }
+
+  @media (min-width: 1024px){
+    .hero-inner{ grid-template-columns: 1.15fr 0.85fr; }
+  }
+
+  /* ============ TOOLKIT (3 pillar cards — Flexbox) ============ */
+  .section{ padding-block: var(--space-l); }
+  .section-head{ max-width: 62ch; margin-bottom: var(--space-l); }
+  .section-head h2{ font-size: clamp(1.6rem, 1.3rem + 1.5vw, 2.4rem); margin-top: .3em; }
+  .section-head p{ color: var(--ink-soft); }
+
+  .toolkit{
+    display:flex;
+    flex-direction:column;
+    gap: var(--space-m);
+  }
+  .toolkit-card{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--space-m);
+    flex:1;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .toolkit-card:hover{ transform: translateY(-4px); box-shadow: 0 12px 30px -18px rgba(54,42,34,.4); }
+  .toolkit-card .icon{
+    width:46px; height:46px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    background: var(--ethereal); color: var(--ink); font-family: var(--font-display); font-weight:800;
+    margin-bottom: var(--space-s);
+  }
+  .toolkit-card h3{ font-size: 1.15rem; margin-bottom:.4em; }
+  .toolkit-card p{ color: var(--ink-soft); font-size:.95rem; margin:0; }
+
+  @media (min-width: 768px){
+    .toolkit{ flex-direction:row; }
+  }
+
+  /* ============ PROCESS (genuine sequence — numbered) ============ */
+  .process-band{ background: var(--ink); color: var(--moonlit); }
+  .process-band .section-head p{ color: rgba(242,240,234,0.72); }
+  .process-band .eyebrow{ color: var(--ethereal); }
+
+  .process-grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-m);
+  }
+  .step{ display:flex; gap: var(--space-s); }
+  .step .num{
+    flex-shrink:0;
+    width:38px; height:38px; border-radius:50%;
+    border: 2px solid var(--ethereal);
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--font-display); font-weight:700; font-size:.9rem;
+  }
+  .step h3{ font-size:1rem; margin-bottom:.25em; }
+  .step p{ color: rgba(242,240,234,0.72); font-size:.9rem; margin:0; }
+
+  @media (min-width: 768px){
+    .process-grid{ grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 1024px){
+    .process-grid{ grid-template-columns: repeat(6, 1fr); }
+    .step{ flex-direction:column; }
+  }
+
+  /* ============ WORK GRID (CSS Grid — macro layout) ============ */
+  .work-grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-m);
+  }
+  .work-card{
+    border-radius: var(--radius);
+    overflow:hidden;
+    border: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .work-thumb{
+    aspect-ratio: 16/10;
+    background: linear-gradient(135deg, var(--ethereal), var(--mocha));
+    position:relative;
+  }
+  .work-thumb::after{
+    content: attr(data-mark);
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--font-display); font-weight:800;
+    font-size: clamp(1.5rem, 1rem + 2vw, 2.4rem);
+    color: rgba(251,250,247,0.9);
+    letter-spacing: -0.02em;
+  }
+  .work-body{ padding: var(--space-s) var(--space-m) var(--space-m); }
+  .work-body .eyebrow{ display:block; margin-bottom:.4em; }
+  .work-body h3{ font-size:1.1rem; margin-bottom:.35em; }
+  .work-body p{ color: var(--ink-soft); font-size:.92rem; margin:0; }
+
+  @media (min-width: 768px){
+    .work-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px){
+    .work-grid{ grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* ============ CTA BAND ============ */
+  .cta-band{
+    background: var(--ethereal);
+    border-radius: var(--radius);
+    padding: var(--space-l) var(--space-m);
+    text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap: var(--space-s);
+  }
+  .cta-band h2{ font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.2rem); max-width: 20ch; }
+
+  /* ============ FOOTER (CSS Grid macro layout) ============ */
+  footer{ background: var(--ink); color: var(--moonlit); padding-block: var(--space-l) var(--space-m); }
+  .footer-grid{
+    display:grid;
+    gap: var(--space-l);
+    grid-template-columns: 1fr;
+  }
+  .footer-grid h3{ font-size: .85rem; text-transform:uppercase; letter-spacing:.1em; color: var(--ethereal); margin-bottom: var(--space-s); }
+  .footer-grid ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.6em; font-size:.92rem; }
+  .footer-grid a{ text-decoration:none; }
+  .footer-grid a:hover{ color: var(--ethereal); }
+  .footer-bottom{
+    border-top:1px solid rgba(242,240,234,0.15);
+    margin-top: var(--space-l);
+    padding-top: var(--space-s);
+    display:flex; flex-direction:column; gap:.5em;
+    font-size:.8rem; color: rgba(242,240,234,0.6);
+  }
+
+  @media (min-width: 768px){
+    .footer-grid{ grid-template-columns: 1.4fr 1fr 1fr 1fr; }
+    .footer-bottom{ flex-direction:row; justify-content:space-between; }
+  }
+
+  /* reveal-on-scroll */
+  .reveal{ opacity:0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+</style>
+</head>
+<body>
+
+<a href="#main" class="visually-hidden-focusable" style="position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--moonlit);padding:.6em 1em;border-radius:8px;z-index:100;">Skip to content</a>
+
+<header>
+  <nav class="wrap nav-row" aria-label="Primary">
+    <a href="#top" class="logo">Atelier<span>Grid</span></a>
+
+    <ul class="nav-links">
+      <li><a href="#toolkit">Toolkit</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="#contact" class="btn btn-primary" style="display:none" id="desktopCta">Start a project</a>
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobilePanel" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="wrap mobile-panel" id="mobilePanel">
+    <a href="#toolkit">Toolkit</a>
+    <a href="#process">Process</a>
+    <a href="#work">Work</a>
+    <a href="#contact" class="btn btn-primary" style="width:fit-content">Start a project</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="wrap hero-inner">
+      <div>
+        <p class="eyebrow">Digital craftsmanship</p>
+        <h1>We build interfaces the way architects build <em>buildings.</em></h1>
+        <p class="lead">Research the site, draft the blueprint, raise the structure, finish the surface. Atelier Grid designs and builds responsive frontends with the same discipline as physical architecture — nothing added that doesn't carry weight.</p>
+        <div class="hero-ctas">
+          <a href="#work" class="btn btn-primary">See the work</a>
+          <a href="#process" class="btn btn-ghost">How we build</a>
+        </div>
+      </div>
+      <div class="blueprint-card reveal">
+        <span class="corner tl" aria-hidden="true"></span>
+        <span class="corner br" aria-hidden="true"></span>
+        <div>
+          <p class="tag">Viewport</p>
+          <p class="measure">375 → 1440px</p>
+        </div>
+        <div>
+          <p class="tag">Breakpoints</p>
+          <p class="measure" style="font-size:1rem;">Mobile · Tablet 768 · Desktop 1024</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLKIT -->
+  <section class="section wrap" id="toolkit">
+    <div class="section-head reveal">
+      <p class="eyebrow">Raw materials</p>
+      <h2>Three layers, one structure</h2>
+      <p>Every build rests on the same three materials — nothing hidden behind a framework.</p>
+    </div>
+    <div class="toolkit">
+      <article class="toolkit-card reveal">
+        <div class="icon">H</div>
+        <h3>HTML5 — the infrastructure</h3>
+        <p>Semantic landmarks and structural meaning. The right element for the right job, not just divs.</p>
+      </article>
+      <article class="toolkit-card reveal">
+        <div class="icon">C</div>
+        <h3>CSS3 — the skin</h3>
+        <p>Responsive styling with Grid for macro layout and Flexbox for the components inside it.</p>
+      </article>
+      <article class="toolkit-card reveal">
+        <div class="icon">J</div>
+        <h3>JavaScript — the logic</h3>
+        <p>Light state management and interaction, kept minimal and purposeful.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section process-band" id="process">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">The execution roadmap</p>
+        <h2>Six stages, in order</h2>
+        <p>Each build moves through the same sequence, start to finish.</p>
+      </div>
+      <div class="process-grid">
+        <div class="step reveal"><span class="num">1</span><div><h3>Discovery</h3><p>Define how might we.</p></div></div>
+        <div class="step reveal"><span class="num">2</span><div><h3>Wireframe</h3><p>Grayscale, mobile-first.</p></div></div>
+        <div class="step reveal"><span class="num">3</span><div><h3>Semantics</h3><p>HTML landmarks.</p></div></div>
+        <div class="step reveal"><span class="num">4</span><div><h3>Style</h3><p>Grid, Flexbox, palette.</p></div></div>
+        <div class="step reveal"><span class="num">5</span><div><h3>Logic</h3><p>State &amp; interactivity.</p></div></div>
+        <div class="step reveal"><span class="num">6</span><div><h3>Audit</h3><p>Performance &amp; access.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="section wrap" id="work">
+    <div class="section-head reveal">
+      <p class="eyebrow">Selected work</p>
+      <h2>Recent structures</h2>
+      <p>A sample of interfaces built on this same foundation.</p>
+    </div>
+    <div class="work-grid">
+      <article class="work-card reveal">
+        <div class="work-thumb" data-mark="01"></div>
+        <div class="work-body">
+          <span class="eyebrow">Retail</span>
+          <h3>Content grid storefront</h3>
+          <p>A mobile-first product grid with fluid type and a sticky filter bar.</p>
+        </div>
+      </article>
+      <article class="work-card reveal">
+        <div class="work-thumb" data-mark="02"></div>
+        <div class="work-body">
+          <span class="eyebrow">Publishing</span>
+          <h3>Article &amp; landmark layout</h3>
+          <p>Header, nav, main, article and footer — structured for screen readers first.</p>
+        </div>
+      </article>
+      <article class="work-card reveal">
+        <div class="work-thumb" data-mark="03"></div>
+        <div class="work-body">
+          <span class="eyebrow">Product</span>
+          <h3>Dashboard shell</h3>
+          <p>Sidebar and main content on CSS Grid, components inside on Flexbox.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section wrap">
+    <div class="cta-band reveal">
+      <h2>Have a site that needs a foundation?</h2>
+      <p style="max-width:40ch; color:var(--ink-soft)">Tell us about the project and we'll sketch the first wireframe within a week.</p>
+      <a href="#contact" class="btn btn-primary">Start a project</a>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="logo" style="color:var(--moonlit)">Atelier<span>Grid</span></p>
+      <p style="max-width:32ch; color:rgba(242,240,234,0.7); font-size:.92rem; margin-top:1em;">A small studio building responsive, semantic frontends — one layer at a time.</p>
+    </div>
+    <div>
+      <h3>Studio</h3>
+      <ul>
+        <li><a href="#toolkit">Toolkit</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#work">Work</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <ul>
+        <li><a href="mailto:hello@ateliergrid.studio">hello@ateliergrid.studio</a></li>
+        <li>+1 (555) 010-0198</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Follow</h3>
+      <ul>
+        <li><a href="#">Dribbble</a></li>
+        <li><a href="#">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <p>&copy; 2026 Atelier Grid. Built with semantic HTML5, CSS Grid &amp; Flexbox — no frameworks.</p>
+    <p>Project 1 — Responsive Frontend Interface</p>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const mobilePanel = document.getElementById('mobilePanel');
+  menuToggle.addEventListener('click', () => {
+    const isOpen = mobilePanel.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  mobilePanel.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobilePanel.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Show desktop CTA only at tablet+ widths (kept in sync with CSS breakpoint)
+  const desktopCta = document.getElementById('desktopCta');
+  const syncCta = () => { desktopCta.style.display = window.innerWidth >= 768 ? 'inline-flex' : 'none'; };
+  syncCta();
+  window.addEventListener('resize', syncCta);
+
+  // Reveal-on-scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
