@@ -1,89 +1,30 @@
-# Project 2: Backend API Development
+# Zainab Parveen — Portfolio
 
-A simple, working REST API built with Node.js + Express, covering exactly
-the brief from your slide deck:
+My personal portfolio website: who I am, what I've built, and the tools I use. It has a black and cyan theme and a small game where you can click floating stars to break them.
 
-- **Goal:** Develop a simple backend API to handle application logic.
-- **Key requirements met:**
-  - ✅ API endpoints (GET / POST, plus PUT / DELETE for completeness)
-  - ✅ Handles user input and responses
-  - ✅ Validates basic data (syntactic + semantic, per "The Gatekeeper Rule")
-- **Key skills demonstrated:** backend development, server-side logic, API concepts.
+## Live demo
 
-## Project structure
+**[zainab-stack9050.github.io/Portfolio](https://zainab-stack9050.github.io/Portfolio/)**
 
-```
-backend-api-project/
-├── server.js              # entry point — wires everything together
-├── routes/
-│   └── users.js           # RESTful endpoints for the "users" resource
-├── middleware/
-│   ├── validateUser.js     # syntactic + semantic input validation
-│   └── errorHandler.js     # centralized 404 / error responses
-├── data/
-│   └── store.js            # in-memory "database" (swap for real DB later)
-└── package.json
-```
+## Features
 
-## Running it
+- Black and cyan theme with a glow that follows the mouse
+- Sections for About, Education, Projects, Skills and Contact
+- "Catch a star" game: click the floating stars to break them and reveal a message
+- Responsive layout for phones, tablets and desktops
+- Respects the reduced-motion setting
 
-```bash
-npm install
-npm start
-# Server listening on http://localhost:3000
-```
+## Built with
 
-## Endpoints
+HTML, CSS and JavaScript in a single `index.html` file. No frameworks or build step.
 
-| Method | Path         | Description             | Success | Failure          |
-|--------|--------------|--------------------------|---------|-------------------|
-| GET    | /health      | Health check             | 200     | —                 |
-| GET    | /users       | List all users           | 200     | —                 |
-| GET    | /users/:id   | Get one user              | 200     | 404 if not found  |
-| POST   | /users       | Create a user             | 201     | 400 if invalid    |
-| PUT    | /users/:id   | Update a user              | 200     | 400 / 404         |
-| DELETE | /users/:id   | Delete a user              | 204     | 404 if not found  |
+## Run it locally
 
-### Example requests
+1. Download or clone this repo.
+2. Open `index.html` in your browser.
 
-```bash
-# List users
-curl http://localhost:3000/users
+## Contact
 
-# Create a user
-curl -X POST http://localhost:3000/users \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Grace Hopper","email":"grace@example.com","role":"admin"}'
-
-# Invalid input -> 400 with details
-curl -X POST http://localhost:3000/users \
-  -H "Content-Type: application/json" \
-  -d '{"email":"not-an-email"}'
-
-# Delete a user -> 204 No Content
-curl -X DELETE http://localhost:3000/users/2
-```
-
-## Design notes (mapping back to your slides)
-
-- **RESTful naming:** resources are nouns (`/users`), HTTP methods are the
-  verbs (`GET`, `POST`, `PUT`, `DELETE`) — no `/getUsers` or `/createUser`.
-- **The Gatekeeper Rule ("never trust the client"):** `validateUser.js`
-  checks structure first (syntactic — is `name` present, is `email` a
-  string?), then content (semantic — is the email actually shaped like an
-  email, is `role` one of the allowed values?).
-- **Status codes as vocabulary:** 200 (OK), 201 (Created), 204 (No Content),
-  400 (Bad Request), 404 (Not Found), 500 (Internal Server Error) are all
-  used deliberately rather than defaulting everything to 200/500.
-- **Client/server decoupling:** the store (`data/store.js`) is isolated
-  behind a small function API, so swapping the in-memory array for a real
-  database later doesn't require touching the routes.
-
-## Next steps if you want to extend it
-
-- Swap `data/store.js` for a real database (PostgreSQL, MongoDB, etc.)
-- Add authentication middleware (401 Unauthorized / 403 Forbidden)
-- Add rate limiting (429 Too Many Requests)
-- Write automated tests (e.g., with `supertest` + `jest`)
-- Add an API gateway in front of this service once you split it into
-  multiple microservices, per the "Scaling the Mind" slide.
+- Email: zainabparveen9050@gmail.com
+- GitHub: [@zainab-stack9050](https://github.com/zainab-stack9050)
+- LinkedIn: [Zainab Parveen](https://www.linkedin.com/in/zainab-parveen-92a489381/)
