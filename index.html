@@ -18,7 +18,7 @@
     color-scheme:dark;
     --bg:#000000; --bg2:#080d0e; --ink:#e8fcff; --muted:#8fb0b6;
     --accent:#00e5ff; --accent2:#00b8d4; --card:#0b1213; --line:#123238;
-    --radius:18px; --max:1040px;
+    --radius:18px; --max:1040px; --on-accent:#000; --glow-pct:28%;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -31,17 +31,37 @@
   .eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
   h2{font-size:clamp(1.9rem,4vw,2.7rem);margin-bottom:36px}
 
+  /* heart cursor (only on devices with a mouse) */
+  .heart-cursor{position:fixed;left:0;top:0;width:26px;height:26px;margin:-13px 0 0 -13px;pointer-events:none;z-index:9999;opacity:0;transition:opacity .2s;will-change:transform}
+  .heart-cursor svg{width:100%;height:100%;display:block;fill:var(--accent);filter:drop-shadow(0 0 6px var(--accent)) drop-shadow(0 0 14px color-mix(in srgb,var(--accent2) 60%,transparent));transition:transform .18s ease;animation:beat 1.4s ease-in-out infinite}
+  .heart-cursor.on{opacity:1}
+  .heart-cursor.hover svg{transform:scale(1.45)}
+  .heart-cursor.down svg{transform:scale(.85)}
+  .heart-cursor.text{opacity:0}
+  @keyframes beat{0%,100%{scale:1}14%{scale:1.15}28%{scale:1}42%{scale:1.1}70%{scale:1}}
+  @media(prefers-reduced-motion:reduce){.heart-cursor svg{animation:none}}
+  .heart-cursor.touch{width:34px;height:34px;margin:-17px 0 0 -17px;transition:opacity .35s}
+  .heart-cursor.touch.on{opacity:1}
+  .heart-pop{position:fixed;left:0;top:0;width:18px;height:18px;margin:-9px 0 0 -9px;pointer-events:none;z-index:9998;will-change:transform,opacity}
+  .heart-pop svg{width:100%;height:100%;display:block;fill:var(--accent);filter:drop-shadow(0 0 5px var(--accent))}
+  .heart-ring{position:fixed;left:0;top:0;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;border:2px solid var(--accent);pointer-events:none;z-index:9998;will-change:transform,opacity}
+  html.has-heart,html.has-heart *{cursor:none!important}
+  html.has-heart input,html.has-heart textarea{cursor:text!important}
   .glow{position:fixed;inset:0;pointer-events:none;z-index:0;
-    background:radial-gradient(500px circle at var(--mx,70%) var(--my,10%),color-mix(in srgb,var(--accent2) 28%,transparent),transparent 70%)}
+    background:radial-gradient(500px circle at var(--mx,70%) var(--my,10%),color-mix(in srgb,var(--accent2) var(--glow-pct),transparent),transparent 70%)}
   main,header,footer{position:relative;z-index:1}
 
   header{position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg) 80%,transparent);border-bottom:1px solid var(--line)}
-  nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  nav{display:flex;align-items:center;justify-content:space-between;min-height:64px;padding-top:8px;padding-bottom:8px;gap:12px}
   .logo{font-family:Fraunces,serif;font-weight:600;font-size:1.15rem;text-decoration:none}
-  nav ul{display:flex;gap:26px;list-style:none}
+  nav ul{display:flex;gap:26px;list-style:none;align-items:center}
   nav a{text-decoration:none;font-size:.92rem;color:var(--muted);transition:color .2s}
   nav a:hover{color:var(--accent)}
-  @media(max-width:640px){nav ul{gap:12px}nav a{font-size:.78rem}}
+  @media(max-width:900px){nav ul{gap:16px;flex-wrap:wrap;justify-content:flex-end}}
+  @media(max-width:640px){nav ul{gap:10px}nav a{font-size:.78rem}}
+  .certs{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .cred{font-size:.8rem;color:var(--muted);margin-top:14px;word-break:break-all;flex:0!important}
+  .cred b{color:var(--ink);font-weight:600}
 
   .hero{min-height:88vh;display:flex;align-items:center;padding:60px 0}
   .hero h1{font-size:clamp(2.8rem,8vw,5.4rem);margin-bottom:18px}
@@ -75,7 +95,8 @@
   @media(max-width:480px){.grid{grid-template-columns:1fr}}
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s}
   .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px -18px color-mix(in srgb,var(--accent) 55%,transparent)}
-  .tag{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+  .tag{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+  .badge{font-size:.68rem;letter-spacing:.08em;padding:3px 10px;border-radius:99px;border:1px solid var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent)}
   .card h3{font-size:1.35rem;margin-bottom:10px}
   .card p{color:var(--muted);font-size:.96rem;flex:1}
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
@@ -99,8 +120,23 @@
   .contact{background:var(--bg2);border-radius:28px;padding:64px 32px;text-align:center}
   .contact h2{max-width:680px;margin:0 auto 16px}
   .contact p{color:var(--muted);margin-bottom:30px}
-  .btn{display:inline-block;background:var(--accent);color:#000;padding:14px 28px;border-radius:99px;text-decoration:none;font-weight:600;transition:transform .2s}
+  .btn{display:inline-block;background:var(--accent);color:var(--on-accent);padding:14px 28px;border-radius:99px;text-decoration:none;font-weight:600;transition:transform .2s}
   .btn:hover{transform:scale(1.04)}
+  .cform{max-width:520px;margin:0 auto;text-align:left;display:grid;gap:14px}
+  .cform label{font-size:.82rem;color:var(--muted);display:block;margin-bottom:6px}
+  .cform input,.cform textarea{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font:inherit;font-size:.95rem;transition:border-color .2s,box-shadow .2s}
+  .cform textarea{min-height:130px;resize:vertical}
+  .cform input:focus,.cform textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+  .cform .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:560px){.cform .row{grid-template-columns:1fr}}
+  .cform .hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+  .cform button.btn{border:0;cursor:pointer;font:inherit;font-weight:600;justify-self:center;margin-top:6px}
+  .cform button.btn:disabled{opacity:.6;cursor:wait;transform:none}
+  .cstatus{min-height:1.4em;text-align:center;font-size:.92rem;margin:0!important}
+  .cstatus.ok{color:var(--accent)}
+  .cstatus.err{color:#ff7a8a}
+  .direct{margin-top:22px;margin-bottom:0!important;font-size:.9rem}
+  .direct a{color:var(--accent)}
   .socials{margin-top:24px;display:flex;justify-content:center;gap:22px}
   .socials a{color:var(--muted);text-decoration:none}
   .socials a:hover{color:var(--accent)}
@@ -111,10 +147,10 @@
     background:radial-gradient(ellipse at 50% 120%,#06232a 0%,#020608 60%,#000 100%);touch-action:manipulation}
   .sky canvas{display:block;width:100%;height:100%}
   .sky .msg{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:min(560px,90%);text-align:center;pointer-events:none;
-    font-family:Fraunces,Georgia,serif;font-style:italic;font-size:clamp(1.05rem,2.6vw,1.4rem);color:var(--ink);transition:opacity .35s}
+    font-family:Fraunces,Georgia,serif;font-style:italic;font-size:clamp(1.05rem,2.6vw,1.4rem);color:#e8fcff;transition:opacity .35s}
   .sky .msg.swap{opacity:0}
-  .sky .count{position:absolute;top:16px;right:20px;font-size:.8rem;color:var(--muted);pointer-events:none}
-  .skip{position:absolute;left:-999px;top:8px;background:var(--accent);color:#000;padding:8px 14px;border-radius:8px;z-index:20;font-weight:600;text-decoration:none}
+  .sky .count{position:absolute;top:16px;right:20px;font-size:.8rem;color:#8fb0b6;pointer-events:none}
+  .skip{position:absolute;left:-999px;top:8px;background:var(--accent);color:var(--on-accent);padding:8px 14px;border-radius:8px;z-index:20;font-weight:600;text-decoration:none}
   .skip:focus{left:8px}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
   nav a.active{color:var(--accent)}
@@ -129,6 +165,7 @@
 <body>
 <a class="skip" href="#top">Skip to content</a>
 <div class="glow" aria-hidden="true"></div>
+<div class="heart-cursor" id="heart" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21.2l-1.4-1.3C5.4 15.2 2 12.1 2 8.3 2 5.2 4.4 3 7.4 3c1.7 0 3.4.8 4.6 2.1C13.2 3.8 14.9 3 16.6 3 19.6 3 22 5.2 22 8.3c0 3.8-3.4 6.9-8.6 11.6L12 21.2z"/></svg></div>
 
 <header>
   <nav class="wrap">
@@ -136,7 +173,9 @@
     <ul>
       <li><a href="#about">About</a></li>
       <li><a href="#education">Education</a></li>
+      <li><a href="#activities">Activities</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Certificates</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -160,7 +199,7 @@
         <div class="stat"><b data-count="8">0</b><span>Projects built</span></div>
         <div class="stat"><b data-count="4">0</b><span>Programming languages</span></div>
         <div class="stat"><b data-count="2">0</b><span>Databases used</span></div>
-        <div class="stat"><b>2025</b><span>Started at NUST</span></div>
+        <div class="stat"><b>2029</b><span>Graduation year</span></div>
       </div>
     </section>
 
@@ -185,30 +224,76 @@
       </article>
     </section>
 
+    <section id="activities" class="reveal">
+      <div class="eyebrow">Activities</div>
+      <h2>Where I've <em>participated</em></h2>
+
+      <article class="job">
+        <div class="when"><b>IST</b>Participant</div>
+        <div>
+          <h3>World Space Week — Institute of Space Technology</h3>
+          <p>Participated in World Space Week at the Institute of Space Technology (IST), Islamabad, the annual space event organized by the Space Education and Outreach Lab of the National Center of GIS and Space Applications (NCGSA).</p>
+        </div>
+      </article>
+    </section>
+
     <section id="projects" class="reveal">
       <div class="eyebrow">Projects</div>
       <h2>Things I've <em>made</em></h2>
       <div class="grid">
         <article class="card">
-          <div class="tag">Full-stack</div>
+          <div class="tag">Full-stack<span class="badge">GP Project</span></div>
           <h3>🚀 LaunchPad — Failfolio</h3>
           <p>A full-stack platform for sharing startup ideas, learning from failed ideas, and exploring outcomes.</p>
           <div class="chips"><span class="chip">Next.js</span><span class="chip">Flask</span><span class="chip">MySQL</span></div>
           <a class="link" href="https://github.com/zainab-stack9050/Failfolio-DB" target="_blank" rel="noopener">View on GitHub →</a>
         </article>
         <article class="card">
-          <div class="tag">Desktop app</div>
+          <div class="tag">Desktop app<span class="badge">GP Project</span></div>
           <h3>⏱️ Chronos</h3>
           <p>A Java desktop app that schedules your tasks around your natural energy levels, so you always work at the right time with the right amount of focus.</p>
           <div class="chips"><span class="chip">Java</span><span class="chip">Java Swing</span></div>
           <a class="link" href="https://github.com/zainab-stack9050/Chronos" target="_blank" rel="noopener">View on GitHub →</a>
         </article>
         <article class="card">
-          <div class="tag">Frontend</div>
+          <div class="tag">Frontend<span class="badge">GP Project</span></div>
           <h3>🕵️ Mysteries Unveiled</h3>
           <p>A frontend website showcasing unsolved mysteries with dynamic JSON-driven content pages.</p>
           <div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">JSON</span></div>
           <a class="link" href="https://github.com/zainab-stack9050/Mysteries-Unveiled" target="_blank" rel="noopener">View on GitHub →</a>
+        </article>
+        <article class="card wide">
+          <div class="tag">Python<span class="badge">Individual</span></div>
+          <h3>🐍 Python Projects</h3>
+          <p>A collection of Python projects: GUI apps built with tkinter, covering data persistence (SQLite), data visualization (matplotlib), secure random generation, and live API integration.</p>
+          <ul class="tasks"><li>Dice Rolling Game</li><li>BMI Calculator</li><li>Password Generator</li></ul>
+          <div class="chips"><span class="chip">Python</span><span class="chip">tkinter</span><span class="chip">SQLite</span><span class="chip">matplotlib</span><span class="chip">REST API</span></div>
+          <a class="link" href="https://github.com/zainab-stack9050/Python_Projects" target="_blank" rel="noopener">View on GitHub →</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="certifications" class="reveal">
+      <div class="eyebrow">Certifications</div>
+      <h2>Things I've <em>completed</em></h2>
+      <div class="grid certs">
+        <article class="card">
+          <div class="tag">DeepLearning.AI</div>
+          <h3>Neural Networks and Deep Learning</h3>
+          <p>Issued Aug 2026</p>
+          <div class="cred"><b>Credential ID</b> 73ES02ZOTPDK</div>
+        </article>
+        <article class="card">
+          <div class="tag">Board Infinity</div>
+          <h3>Deep Learning: Advanced Backbones and Efficient GPU Training</h3>
+          <p>Issued Jul 2026</p>
+          <div class="cred"><b>Credential ID</b> N7348HKYA700</div>
+        </article>
+        <article class="card">
+          <div class="tag">Google</div>
+          <h3>Google AI Essentials</h3>
+          <p>Issued Aug 2026. Covers prompt engineering, using generative AI to streamline daily workflows, and applying AI responsibly.</p>
+          <div class="cred"><b>Credential ID</b> B4Z6TLWRSWMH</div>
         </article>
       </div>
     </section>
@@ -218,8 +303,11 @@
       <h2>What I <em>reach for</em></h2>
       <div class="kit">
         <div><h4>Languages</h4><div class="chips"><span class="chip">Python</span><span class="chip">Java</span><span class="chip">JavaScript</span><span class="chip">C++</span></div></div>
-        <div><h4>Web</h4><div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">Next.js</span><span class="chip">Flask</span></div></div>
+        <div><h4>Web Development</h4><div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">Next.js</span></div></div>
+        <div><h4>Backend</h4><div class="chips"><span class="chip">Flask</span><span class="chip">REST APIs</span></div></div>
         <div><h4>Database</h4><div class="chips"><span class="chip">MySQL</span><span class="chip">SQLite</span></div></div>
+        <div><h4>Libraries &amp; GUI</h4><div class="chips"><span class="chip">NumPy</span><span class="chip">Matplotlib</span><span class="chip">tkinter</span><span class="chip">Java Swing</span></div></div>
+        <div><h4>Tools</h4><div class="chips"><span class="chip">Git</span><span class="chip">GitHub</span></div></div>
       </div>
     </section>
 
@@ -229,6 +317,7 @@
       <div class="bits">
         <div class="bit"><span class="emoji">☕</span><h3>Coffee</h3><p>A warm cup is how every coding session and late-night idea begins.</p></div>
         <div class="bit"><span class="emoji">🌿</span><h3>Nature</h3><p>Green spaces, fresh air and long walks, my favorite way to reset my head.</p></div>
+        <div class="bit"><span class="emoji">✈️</span><h3>Travelling</h3><p>New places, new people and new stories, every trip leaves me with fresh ideas.</p></div>
       </div>
     </section>
 
@@ -247,7 +336,17 @@
         <div class="eyebrow">Say hello</div>
         <h2>Got an idea, a project, or just want to <em>say hi</em>?</h2>
         <p>I'd love to hear from you. Drop me a message and let's build something.</p>
-        <a class="btn" href="mailto:zainabparveen9050@gmail.com">zainabparveen9050@gmail.com</a>
+        <form class="cform" id="cform" novalidate>
+          <input class="hp" type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="row">
+            <div><label for="cname">Your name</label><input id="cname" name="name" type="text" required autocomplete="name" placeholder="Sarah Alexander"></div>
+            <div><label for="cmail">Your email</label><input id="cmail" name="email" type="email" required autocomplete="email" placeholder="sarah.alexander@example.com"></div>
+          </div>
+          <div><label for="cmsg">Message</label><textarea id="cmsg" name="message" required placeholder="Hi Zainab, I'd love to..."></textarea></div>
+          <button class="btn" type="submit" id="csend">Send message</button>
+          <p class="cstatus" id="cstatus" role="status" aria-live="polite"></p>
+        </form>
+        <p class="direct">Or email me directly: <a href="mailto:zainabparveen9050@gmail.com">zainabparveen9050@gmail.com</a></p>
         <div class="socials">
           <a href="https://github.com/zainab-stack9050" target="_blank" rel="noopener">GitHub</a>
           <a href="https://www.linkedin.com/in/zainab-parveen-92a489381/" target="_blank" rel="noopener">LinkedIn</a>
@@ -265,7 +364,140 @@
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
 
+
+  /* Contact form */
+  (function(){
+    // Get a free access key at https://web3forms.com (enter zainabparveen9050@gmail.com) and paste it here.
+    const ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
+    const TO = 'zainabparveen9050@gmail.com';
+    const f = document.getElementById('cform'), st = document.getElementById('cstatus'), btn = document.getElementById('csend');
+    const say = (t, c) => { st.textContent = t; st.className = 'cstatus' + (c ? ' ' + c : ''); };
+    f.addEventListener('submit', async e => {
+      e.preventDefault();
+      const d = Object.fromEntries(new FormData(f));
+      if(d.botcheck) return;
+      if(!d.name.trim() || !/^\S+@\S+\.\S+$/.test(d.email) || !d.message.trim()){ say('Please fill in your name, a valid email and a message.', 'err'); return; }
+      if(ACCESS_KEY === 'YOUR_WEB3FORMS_ACCESS_KEY'){
+        // fallback until a key is added: open the visitor's email app, prefilled
+        location.href = 'mailto:' + TO + '?subject=' + encodeURIComponent('Portfolio message from ' + d.name) +
+          '&body=' + encodeURIComponent(d.message + '\n\n' + d.name + ' (' + d.email + ')');
+        return;
+      }
+      btn.disabled = true; say('Sending…');
+      try{
+        const r = await fetch('https://api.web3forms.com/submit', {
+          method:'POST', headers:{'Content-Type':'application/json', 'Accept':'application/json'},
+          body: JSON.stringify({access_key: ACCESS_KEY, subject: 'Portfolio message from ' + d.name, name: d.name, email: d.email, message: d.message})
+        });
+        const j = await r.json();
+        if(!j.success) throw new Error();
+        f.reset(); say('Thanks! Your message is on its way. ✨', 'ok');
+      }catch(err){
+        say('Something went wrong. Please email me directly instead.', 'err');
+      }finally{ btn.disabled = false; }
+    });
+  })();
+
   const root = document.documentElement;
+  /* Heart cursor: mouse + touch */
+  (function(){
+    const h = document.getElementById('heart');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hoverSel = 'a,button,[role="button"],.card,.bit,.chip,.stat,canvas';
+    const heartPath = h.querySelector('svg').innerHTML;
+    const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+    let hideTimer = 0;
+
+    /* mouse / trackpad */
+    if(fine){
+      document.documentElement.classList.add('has-heart');
+      window.addEventListener('pointermove', e => {
+        if(e.pointerType === 'touch') return;
+        h.style.transform = 'translate3d(' + e.clientX + 'px,' + e.clientY + 'px,0)';
+        h.classList.add('on');
+        const t = e.target;
+        h.classList.toggle('text', !!t.closest('input,textarea'));
+        h.classList.toggle('hover', !!t.closest(hoverSel));
+      });
+      window.addEventListener('pointerdown', e => { if(e.pointerType !== 'touch') h.classList.add('down'); });
+      window.addEventListener('pointerup', () => h.classList.remove('down'));
+      window.addEventListener('click', e => { if(e.pointerType !== 'touch' && !e.target.closest('input,textarea,a,button')) pop(e.clientX, e.clientY); });
+      document.documentElement.addEventListener('pointerleave', () => h.classList.remove('on'));
+    }
+
+    /* touch: heart follows the finger (floats just above it), pops on tap */
+    const OFFSET_Y = -38;
+    function place(t){
+      h.style.transform = 'translate3d(' + t.clientX + 'px,' + (t.clientY + OFFSET_Y) + 'px,0)';
+    }
+    let lastPop = 0;
+    function pop(x, y){
+      const now = Date.now();
+      if(now - lastPop < 120) return;   /* dedupe touch + pointer events */
+      lastPop = now;
+      if(reduce){
+        const r = document.createElement('div');
+        r.className = 'heart-ring';
+        r.style.transform = 'translate3d('+x+'px,'+y+'px,0)';
+        document.body.appendChild(r);
+        r.animate([{opacity:.9},{opacity:0}],{duration:400}).onfinish = () => r.remove();
+        return;
+      }
+      const ring = document.createElement('div');
+      ring.className = 'heart-ring';
+      document.body.appendChild(ring);
+      ring.animate(
+        [{transform:'translate3d('+x+'px,'+y+'px,0) scale(.3)',opacity:.9},
+         {transform:'translate3d('+x+'px,'+y+'px,0) scale(1.6)',opacity:0}],
+        {duration:520,easing:'ease-out'}).onfinish = () => ring.remove();
+      for(let i = 0; i < 5; i++){
+        const el = document.createElement('div');
+        el.className = 'heart-pop';
+        el.innerHTML = '<svg viewBox="0 0 24 24">' + heartPath + '</svg>';
+        document.body.appendChild(el);
+        const dx = (Math.random() - .5) * 90, dy = -(40 + Math.random() * 70), s = .6 + Math.random() * .7;
+        el.animate(
+          [{transform:'translate3d('+x+'px,'+y+'px,0) scale(.2)',opacity:1},
+           {transform:'translate3d('+(x+dx)+'px,'+(y+dy)+'px,0) scale('+s+')',opacity:0}],
+          {duration:700 + Math.random() * 400,easing:'cubic-bezier(.2,.7,.3,1)'}).onfinish = () => el.remove();
+      }
+    }
+    function show(t){
+      clearTimeout(hideTimer);
+      h.classList.add('touch','on');
+      h.classList.remove('text');
+      place(t);
+    }
+    function hideSoon(){
+      clearTimeout(hideTimer);
+      h.classList.remove('down');
+      hideTimer = setTimeout(() => h.classList.remove('on'), 450);
+    }
+    window.addEventListener('touchstart', e => {
+      const t = e.touches[0];
+      show(t);
+      h.classList.add('down');
+      if(!e.target.closest('input,textarea')) pop(t.clientX, t.clientY);
+      root.style.setProperty('--mx', t.clientX + 'px');
+      root.style.setProperty('--my', t.clientY + 'px');
+    }, {passive:true});
+    window.addEventListener('touchmove', e => {
+      const t = e.touches[0];
+      show(t);
+      root.style.setProperty('--mx', t.clientX + 'px');
+      root.style.setProperty('--my', t.clientY + 'px');
+    }, {passive:true});
+    window.addEventListener('pointerdown', e => {
+      if(e.pointerType === 'mouse') return;
+      show(e);
+      h.classList.add('down');
+      if(!e.target.closest('input,textarea')) pop(e.clientX, e.clientY);
+    }, {passive:true});
+    window.addEventListener('pointerup', e => { if(e.pointerType !== 'mouse') hideSoon(); }, {passive:true});
+    window.addEventListener('touchend', hideSoon, {passive:true});
+    window.addEventListener('touchcancel', hideSoon, {passive:true});
+  })();
+
   window.addEventListener('pointermove', e => {
     root.style.setProperty('--mx', e.clientX + 'px');
     root.style.setProperty('--my', e.clientY + 'px');
