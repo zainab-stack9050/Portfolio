@@ -76,7 +76,12 @@
   .scroll{margin-top:56px;font-size:.8rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:12px}
   .scroll::after{content:"";width:1px;height:42px;background:var(--accent);animation:drop 1.8s infinite}
   @keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-
+  
+  .about-top{display:flex;align-items:center;gap:40px}
+  .about-top p{flex:1}
+  .portrait{flex:0 0 auto;width:220px;height:220px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);
+    box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 14%,transparent),0 18px 40px -16px color-mix(in srgb,var(--accent) 60%,transparent)}
+  @media(max-width:700px){.about-top{flex-direction:column-reverse;align-items:flex-start;gap:24px}.portrait{width:160px;height:160px}}
   .about p{font-size:1.25rem;max-width:760px}
   .about strong{color:var(--accent);font-weight:600}
   .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:48px}
@@ -194,8 +199,10 @@
     <section id="about" class="about reveal">
       <div class="eyebrow">About</div>
       <h2>A little about me</h2>
+      <div class="about-top">
       <p>I'm Zainab Parveen, a <strong>sophomore at NUST</strong> who loves turning ideas into working software, from full-stack web apps to desktop tools. When I'm not coding you'll find me with a good <strong>cup of coffee</strong> or outside somewhere green, because the best ideas tend to show up on a walk.</p>
-      <div class="stats">
+      <img class="portrait" src="photo.jpg" alt="Portrait of Zainab Parveen" width="220" height="220">
+      </div><div class="stats">
         <div class="stat"><b data-count="8">0</b><span>Projects built</span></div>
         <div class="stat"><b data-count="4">0</b><span>Programming languages</span></div>
         <div class="stat"><b data-count="2">0</b><span>Databases used</span></div>
