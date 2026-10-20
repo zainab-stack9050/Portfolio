@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zainab Parveen — Portfolio</title>
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="Zainab Parveen — Portfolio">
+<meta property="og:description" content="Sophomore at NUST. Full-stack apps, desktop tools and Python projects.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23000'/%3E%3Ctext x='50' y='72' font-size='62' text-anchor='middle' fill='%2300e5ff' font-family='Georgia,serif'%3EZ%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Zainab Parveen — sophomore at NUST. I build full-stack apps, desktop tools and Python projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:dark;
+    --bg:#000000; --bg2:#080d0e; --ink:#e8fcff; --muted:#8fb0b6;
+    --accent:#00e5ff; --accent2:#00b8d4; --card:#0b1213; --line:#123238;
+    --radius:18px; --max:1040px; --on-accent:#000; --glow-pct:28%;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;line-height:1.15;letter-spacing:-.01em}
+  em{font-style:italic;color:var(--accent)}
+  a{color:inherit}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  section{padding:96px 0}
+  .eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
+  h2{font-size:clamp(1.9rem,4vw,2.7rem);margin-bottom:36px}
+
+  /* heart cursor (only on devices with a mouse) */
+  .heart-cursor{position:fixed;left:0;top:0;width:26px;height:26px;margin:-13px 0 0 -13px;pointer-events:none;z-index:9999;opacity:0;transition:opacity .2s;will-change:transform}
+  .heart-cursor svg{width:100%;height:100%;display:block;fill:var(--accent);filter:drop-shadow(0 0 6px var(--accent)) drop-shadow(0 0 14px color-mix(in srgb,var(--accent2) 60%,transparent));transition:transform .18s ease;animation:beat 1.4s ease-in-out infinite}
+  .heart-cursor.on{opacity:1}
+  .heart-cursor.hover svg{transform:scale(1.45)}
+  .heart-cursor.down svg{transform:scale(.85)}
+  .heart-cursor.text{opacity:0}
+  @keyframes beat{0%,100%{scale:1}14%{scale:1.15}28%{scale:1}42%{scale:1.1}70%{scale:1}}
+  @media(prefers-reduced-motion:reduce){.heart-cursor svg{animation:none}}
+  .heart-cursor.touch{width:34px;height:34px;margin:-17px 0 0 -17px;transition:opacity .35s}
+  .heart-cursor.touch.on{opacity:1}
+  .heart-pop{position:fixed;left:0;top:0;width:18px;height:18px;margin:-9px 0 0 -9px;pointer-events:none;z-index:9998;will-change:transform,opacity}
+  .heart-pop svg{width:100%;height:100%;display:block;fill:var(--accent);filter:drop-shadow(0 0 5px var(--accent))}
+  .heart-ring{position:fixed;left:0;top:0;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;border:2px solid var(--accent);pointer-events:none;z-index:9998;will-change:transform,opacity}
+  html.has-heart,html.has-heart *{cursor:none!important}
+  html.has-heart input,html.has-heart textarea{cursor:text!important}
+  .glow{position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(500px circle at var(--mx,70%) var(--my,10%),color-mix(in srgb,var(--accent2) var(--glow-pct),transparent),transparent 70%)}
+  main,header,footer{position:relative;z-index:1}
+
+  header{position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg) 80%,transparent);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;min-height:64px;padding-top:8px;padding-bottom:8px;gap:12px}
+  .logo{font-family:Fraunces,serif;font-weight:600;font-size:1.15rem;text-decoration:none}
+  nav ul{display:flex;gap:26px;list-style:none;align-items:center}
+  nav a{text-decoration:none;font-size:.92rem;color:var(--muted);transition:color .2s}
+  nav a:hover{color:var(--accent)}
+  @media(max-width:900px){nav ul{gap:16px;flex-wrap:wrap;justify-content:flex-end}}
+  @media(max-width:640px){nav ul{gap:10px}nav a{font-size:.78rem}}
+  .certs{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .cred{font-size:.8rem;color:var(--muted);margin-top:14px;word-break:break-all;flex:0!important}
+  .cred b{color:var(--ink);font-weight:600}
+
+  .hero{min-height:88vh;display:flex;align-items:center;padding:60px 0}
+  .hero h1{font-size:clamp(2.8rem,8vw,5.4rem);margin-bottom:18px}
+  .hero p{font-size:1.2rem;color:var(--muted);max-width:560px}
+  .hero p.tagline{font-family:Fraunces,Georgia,serif;font-style:italic;font-size:clamp(1.1rem,2.4vw,1.6rem);letter-spacing:.18em;
+    background:linear-gradient(100deg,var(--muted) 0%,var(--muted) 35%,var(--accent) 50%,var(--accent2) 60%,var(--muted) 75%,var(--muted) 100%);
+    background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+    opacity:0;animation:tagIn 1.6s .3s ease forwards,shimmer 5s 1.6s linear infinite}
+  @keyframes tagIn{from{opacity:0;letter-spacing:.5em;transform:translateY(10px)}to{opacity:1;letter-spacing:.18em;transform:none}}
+  @keyframes shimmer{from{background-position:120% 0}to{background-position:-120% 0}}
+  @media(prefers-reduced-motion:reduce){.hero p.tagline{animation:none;opacity:1}}
+  .scroll{margin-top:56px;font-size:.8rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:12px}
+  .scroll::after{content:"";width:1px;height:42px;background:var(--accent);animation:drop 1.8s infinite}
+  @keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  .about p{font-size:1.25rem;max-width:760px}
+  .about strong{color:var(--accent);font-weight:600}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:48px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+  .stat b{display:block;font-family:Fraunces,serif;font-size:2.4rem;color:var(--accent)}
+  .stat span{color:var(--muted);font-size:.92rem}
+
+  .job{display:grid;grid-template-columns:180px 1fr;gap:28px;padding:32px 0;border-top:1px solid var(--line)}
+  .job .when{color:var(--muted);font-size:.9rem}
+  .job .when b{display:block;color:var(--ink);font-size:1rem}
+  .job h3{font-size:1.4rem;margin-bottom:12px}
+  .job p{color:var(--muted)}
+  @media(max-width:700px){.job{grid-template-columns:1fr;gap:8px}}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:22px}
+  @media(max-width:480px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s}
+  .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px -18px color-mix(in srgb,var(--accent) 55%,transparent)}
+  .tag{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+  .badge{font-size:.68rem;letter-spacing:.08em;padding:3px 10px;border-radius:99px;border:1px solid var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent)}
+  .card h3{font-size:1.35rem;margin-bottom:10px}
+  .card p{color:var(--muted);font-size:.96rem;flex:1}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+  .chip{font-size:.78rem;padding:4px 12px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);color:var(--muted)}
+  .card a.link{font-weight:600;text-decoration:none;color:var(--accent);font-size:.92rem}
+  .card a.link:hover{text-decoration:underline}
+  .card.wide{grid-column:1/-1}
+  .tasks{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 28px;color:var(--ink);font-size:.96rem}
+  .tasks li::before{content:"→ ";color:var(--accent)}
+
+  .kit{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:28px}
+  .kit h4{font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+  .kit .chips{margin:0}
+
+  .bits{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+  .bit{background:var(--bg2);border-radius:var(--radius);padding:32px}
+  .bit .emoji{font-size:2rem;display:block;margin-bottom:10px}
+  .bit h3{font-size:1.3rem;margin-bottom:8px}
+  .bit p{color:var(--muted)}
+
+  .contact{background:var(--bg2);border-radius:28px;padding:64px 32px;text-align:center}
+  .contact h2{max-width:680px;margin:0 auto 16px}
+  .contact p{color:var(--muted);margin-bottom:30px}
+  .btn{display:inline-block;background:var(--accent);color:var(--on-accent);padding:14px 28px;border-radius:99px;text-decoration:none;font-weight:600;transition:transform .2s}
+  .btn:hover{transform:scale(1.04)}
+  .cform{max-width:520px;margin:0 auto;text-align:left;display:grid;gap:14px}
+  .cform label{font-size:.82rem;color:var(--muted);display:block;margin-bottom:6px}
+  .cform input,.cform textarea{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font:inherit;font-size:.95rem;transition:border-color .2s,box-shadow .2s}
+  .cform textarea{min-height:130px;resize:vertical}
+  .cform input:focus,.cform textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+  .cform .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:560px){.cform .row{grid-template-columns:1fr}}
+  .cform .hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+  .cform button.btn{border:0;cursor:pointer;font:inherit;font-weight:600;justify-self:center;margin-top:6px}
+  .cform button.btn:disabled{opacity:.6;cursor:wait;transform:none}
+  .cstatus{min-height:1.4em;text-align:center;font-size:.92rem;margin:0!important}
+  .cstatus.ok{color:var(--accent)}
+  .cstatus.err{color:#ff7a8a}
+  .direct{margin-top:22px;margin-bottom:0!important;font-size:.9rem}
+  .direct a{color:var(--accent)}
+  .socials{margin-top:24px;display:flex;justify-content:center;gap:22px}
+  .socials a{color:var(--muted);text-decoration:none}
+  .socials a:hover{color:var(--accent)}
+
+  footer{padding:40px 0;text-align:center;color:var(--muted);font-size:.85rem}
+
+  .sky{position:relative;height:420px;border:1px solid var(--line);border-radius:28px;overflow:hidden;
+    background:radial-gradient(ellipse at 50% 120%,#06232a 0%,#020608 60%,#000 100%);touch-action:manipulation}
+  .sky canvas{display:block;width:100%;height:100%}
+  .sky .msg{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:min(560px,90%);text-align:center;pointer-events:none;
+    font-family:Fraunces,Georgia,serif;font-style:italic;font-size:clamp(1.05rem,2.6vw,1.4rem);color:#e8fcff;transition:opacity .35s}
+  .sky .msg.swap{opacity:0}
+  .sky .count{position:absolute;top:16px;right:20px;font-size:.8rem;color:#8fb0b6;pointer-events:none}
+  .skip{position:absolute;left:-999px;top:8px;background:var(--accent);color:var(--on-accent);padding:8px 14px;border-radius:8px;z-index:20;font-weight:600;text-decoration:none}
+  .skip:focus{left:8px}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+  nav a.active{color:var(--accent)}
+  section[id]{scroll-margin-top:72px}
+  .dream{font-family:Fraunces,Georgia,serif;font-style:italic;font-size:clamp(1.6rem,4vw,2.4rem);color:var(--accent);margin-bottom:14px;letter-spacing:.02em}
+  footer{border-top:1px solid var(--line);padding-top:56px}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.scroll::after{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#top">Skip to content</a>
+<div class="glow" aria-hidden="true"></div>
+<div class="heart-cursor" id="heart" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21.2l-1.4-1.3C5.4 15.2 2 12.1 2 8.3 2 5.2 4.4 3 7.4 3c1.7 0 3.4.8 4.6 2.1C13.2 3.8 14.9 3 16.6 3 19.6 3 22 5.2 22 8.3c0 3.8-3.4 6.9-8.6 11.6L12 21.2z"/></svg></div>
+
+<header>
+  <nav class="wrap">
+    <a class="logo" href="#top">Zainab Parveen</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#activities">Activities</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Certificates</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <h1>Zainab <em>Parveen</em></h1>
+        <p class="tagline">Accept yourself</p>
+      </div>
+    </section>
+
+    <section id="about" class="about reveal">
+      <div class="eyebrow">About</div>
+      <h2>A little about me</h2>
+      <p>I'm Zainab Parveen, a <strong>sophomore at NUST</strong> who loves turning ideas into working software, from full-stack web apps to desktop tools. When I'm not coding you'll find me with a good <strong>cup of coffee</strong> or outside somewhere green, because the best ideas tend to show up on a walk.</p>
+      <div class="stats">
+        <div class="stat"><b data-count="8">0</b><span>Projects built</span></div>
+        <div class="stat"><b data-count="4">0</b><span>Programming languages</span></div>
+        <div class="stat"><b data-count="2">0</b><span>Databases used</span></div>
+        <div class="stat"><b>2029</b><span>Graduation year</span></div>
+      </div>
+    </section>
+
+    <section id="education" class="reveal">
+      <div class="eyebrow">Education</div>
+      <h2>Where I've been <em>learning</em></h2>
+
+      <article class="job">
+        <div class="when"><b>2025 – now</b>Sophomore</div>
+        <div>
+          <h3>NUST</h3>
+          <p>Currently studying at the National University of Sciences and Technology, building projects and sharpening my skills in software development.</p>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="when"><b>2012 – 2024</b>School years</div>
+        <div>
+          <h3>SPSC</h3>
+          <p>Twelve years of schooling where I built my foundations and first got curious about how computers work.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="activities" class="reveal">
+      <div class="eyebrow">Activities</div>
+      <h2>Where I've <em>participated</em></h2>
+
+      <article class="job">
+        <div class="when"><b>IST</b>Participant</div>
+        <div>
+          <h3>World Space Week — Institute of Space Technology</h3>
+          <p>Participated in World Space Week at the Institute of Space Technology (IST), Islamabad, the annual space event organized by the Space Education and Outreach Lab of the National Center of GIS and Space Applications (NCGSA).</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="projects" class="reveal">
+      <div class="eyebrow">Projects</div>
+      <h2>Things I've <em>made</em></h2>
+      <div class="grid">
+        <article class="card">
+          <div class="tag">Full-stack<span class="badge">GP Project</span></div>
+          <h3>🚀 LaunchPad — Failfolio</h3>
+          <p>A full-stack platform for sharing startup ideas, learning from failed ideas, and exploring outcomes.</p>
+          <div class="chips"><span class="chip">Next.js</span><span class="chip">Flask</span><span class="chip">MySQL</span></div>
+          <a class="link" href="https://github.com/zainab-stack9050/Failfolio-DB" target="_blank" rel="noopener">View on GitHub →</a>
+        </article>
+        <article class="card">
+          <div class="tag">Desktop app<span class="badge">GP Project</span></div>
+          <h3>⏱️ Chronos</h3>
+          <p>A Java desktop app that schedules your tasks around your natural energy levels, so you always work at the right time with the right amount of focus.</p>
+          <div class="chips"><span class="chip">Java</span><span class="chip">Java Swing</span></div>
+          <a class="link" href="https://github.com/zainab-stack9050/Chronos" target="_blank" rel="noopener">View on GitHub →</a>
+        </article>
+        <article class="card">
+          <div class="tag">Frontend<span class="badge">GP Project</span></div>
+          <h3>🕵️ Mysteries Unveiled</h3>
+          <p>A frontend website showcasing unsolved mysteries with dynamic JSON-driven content pages.</p>
+          <div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">JSON</span></div>
+          <a class="link" href="https://github.com/zainab-stack9050/Mysteries-Unveiled" target="_blank" rel="noopener">View on GitHub →</a>
+        </article>
+        <article class="card wide">
+          <div class="tag">Python<span class="badge">Individual</span></div>
+          <h3>🐍 Python Projects</h3>
+          <p>A collection of Python projects: GUI apps built with tkinter, covering data persistence (SQLite), data visualization (matplotlib), secure random generation, and live API integration.</p>
+          <ul class="tasks"><li>Dice Rolling Game</li><li>BMI Calculator</li><li>Password Generator</li></ul>
+          <div class="chips"><span class="chip">Python</span><span class="chip">tkinter</span><span class="chip">SQLite</span><span class="chip">matplotlib</span><span class="chip">REST API</span></div>
+          <a class="link" href="https://github.com/zainab-stack9050/Python_Projects" target="_blank" rel="noopener">View on GitHub →</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="certifications" class="reveal">
+      <div class="eyebrow">Certifications</div>
+      <h2>Things I've <em>completed</em></h2>
+      <div class="grid certs">
+        <article class="card">
+          <div class="tag">DeepLearning.AI</div>
+          <h3>Neural Networks and Deep Learning</h3>
+          <p>Issued Aug 2026</p>
+          <div class="cred"><b>Credential ID</b> 73ES02ZOTPDK</div>
+        </article>
+        <article class="card">
+          <div class="tag">Board Infinity</div>
+          <h3>Deep Learning: Advanced Backbones and Efficient GPU Training</h3>
+          <p>Issued Jul 2026</p>
+          <div class="cred"><b>Credential ID</b> N7348HKYA700</div>
+        </article>
+        <article class="card">
+          <div class="tag">Google</div>
+          <h3>Google AI Essentials</h3>
+          <p>Issued Aug 2026. Covers prompt engineering, using generative AI to streamline daily workflows, and applying AI responsibly.</p>
+          <div class="cred"><b>Credential ID</b> B4Z6TLWRSWMH</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="skills" class="reveal">
+      <div class="eyebrow">Technologies</div>
+      <h2>What I <em>reach for</em></h2>
+      <div class="kit">
+        <div><h4>Languages</h4><div class="chips"><span class="chip">Python</span><span class="chip">Java</span><span class="chip">JavaScript</span><span class="chip">C++</span></div></div>
+        <div><h4>Web Development</h4><div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">Next.js</span></div></div>
+        <div><h4>Backend</h4><div class="chips"><span class="chip">Flask</span><span class="chip">REST APIs</span></div></div>
+        <div><h4>Database</h4><div class="chips"><span class="chip">MySQL</span><span class="chip">SQLite</span></div></div>
+        <div><h4>Libraries &amp; GUI</h4><div class="chips"><span class="chip">NumPy</span><span class="chip">Matplotlib</span><span class="chip">tkinter</span><span class="chip">Java Swing</span></div></div>
+        <div><h4>Tools</h4><div class="chips"><span class="chip">Git</span><span class="chip">GitHub</span></div></div>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <div class="eyebrow">Off the keyboard</div>
+      <h2>Things I <em>love</em></h2>
+      <div class="bits">
+        <div class="bit"><span class="emoji">☕</span><h3>Coffee</h3><p>A warm cup is how every coding session and late-night idea begins.</p></div>
+        <div class="bit"><span class="emoji">🌿</span><h3>Nature</h3><p>Green spaces, fresh air and long walks, my favorite way to reset my head.</p></div>
+        <div class="bit"><span class="emoji">✈️</span><h3>Travelling</h3><p>New places, new people and new stories, every trip leaves me with fresh ideas.</p></div>
+      </div>
+    </section>
+
+    <section id="stars" class="reveal">
+      <div class="eyebrow">Play</div>
+      <h2>Catch a <em>star</em></h2>
+      <div class="sky" id="sky">
+        <canvas id="skyc" role="img" aria-label="Floating stars you can click to break"></canvas>
+        <p class="msg" id="msg" aria-live="polite">Click a star to break it.</p>
+        <span class="count" id="cnt">0 broken</span>
+      </div>
+    </section>
+
+    <section id="contact" class="reveal">
+      <div class="contact">
+        <div class="eyebrow">Say hello</div>
+        <h2>Got an idea, a project, or just want to <em>say hi</em>?</h2>
+        <p>I'd love to hear from you. Drop me a message and let's build something.</p>
+        <form class="cform" id="cform" novalidate>
+          <input class="hp" type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="row">
+            <div><label for="cname">Your name</label><input id="cname" name="name" type="text" required autocomplete="name" placeholder="Sarah Alexander"></div>
+            <div><label for="cmail">Your email</label><input id="cmail" name="email" type="email" required autocomplete="email" placeholder="sarah.alexander@example.com"></div>
+          </div>
+          <div><label for="cmsg">Message</label><textarea id="cmsg" name="message" required placeholder="Hi Zainab, I'd love to..."></textarea></div>
+          <button class="btn" type="submit" id="csend">Send message</button>
+          <p class="cstatus" id="cstatus" role="status" aria-live="polite"></p>
+        </form>
+        <p class="direct">Or email me directly: <a href="mailto:zainabparveen9050@gmail.com">zainabparveen9050@gmail.com</a></p>
+        <div class="socials">
+          <a href="https://github.com/zainab-stack9050" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/zainab-parveen-92a489381/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <p class="dream">Dream big.</p>
+  <p>© <span id="yr"></span> Zainab Parveen. Designed and built with love.</p>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+
+  /* Contact form */
+  (function(){
+    // Get a free access key at https://web3forms.com (enter zainabparveen9050@gmail.com) and paste it here.
+    const ACCESS_KEY = 'de860872-7648-46f2-877e-0fac53240214';
+    const TO = 'zainabparveen9050@gmail.com';
+    const f = document.getElementById('cform'), st = document.getElementById('cstatus'), btn = document.getElementById('csend');
+    const say = (t, c) => { st.textContent = t; st.className = 'cstatus' + (c ? ' ' + c : ''); };
+    f.addEventListener('submit', async e => {
+      e.preventDefault();
+      const d = Object.fromEntries(new FormData(f));
+      if(d.botcheck) return;
+      if(!d.name.trim() || !/^\S+@\S+\.\S+$/.test(d.email) || !d.message.trim()){ say('Please fill in your name, a valid email and a message.', 'err'); return; }
+      if(ACCESS_KEY === 'YOUR_WEB3FORMS_ACCESS_KEY'){
+        // fallback until a key is added: open the visitor's email app, prefilled
+        location.href = 'mailto:' + TO + '?subject=' + encodeURIComponent('Portfolio message from ' + d.name) +
+          '&body=' + encodeURIComponent(d.message + '\n\n' + d.name + ' (' + d.email + ')');
+        return;
+      }
+      btn.disabled = true; say('Sending…');
+      try{
+        const r = await fetch('https://api.web3forms.com/submit', {
+          method:'POST', headers:{'Content-Type':'application/json', 'Accept':'application/json'},
+          body: JSON.stringify({access_key: ACCESS_KEY, subject: 'Portfolio message from ' + d.name, name: d.name, email: d.email, message: d.message})
+        });
+        const j = await r.json();
+        if(!j.success) throw new Error();
+        f.reset(); say('Thanks! Your message is on its way. ✨', 'ok');
+      }catch(err){
+        say('Something went wrong. Please email me directly instead.', 'err');
+      }finally{ btn.disabled = false; }
+    });
+  })();
+
+  const root = document.documentElement;
+  /* Heart cursor: mouse + touch */
+  (function(){
+    const h = document.getElementById('heart');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hoverSel = 'a,button,[role="button"],.card,.bit,.chip,.stat,canvas';
+    const heartPath = h.querySelector('svg').innerHTML;
+    const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+    let hideTimer = 0;
+
+    /* mouse / trackpad */
+    if(fine){
+      document.documentElement.classList.add('has-heart');
+      window.addEventListener('pointermove', e => {
+        if(e.pointerType === 'touch') return;
+        h.style.transform = 'translate3d(' + e.clientX + 'px,' + e.clientY + 'px,0)';
+        h.classList.add('on');
+        const t = e.target;
+        h.classList.toggle('text', !!t.closest('input,textarea'));
+        h.classList.toggle('hover', !!t.closest(hoverSel));
+      });
+      window.addEventListener('pointerdown', e => { if(e.pointerType !== 'touch') h.classList.add('down'); });
+      window.addEventListener('pointerup', () => h.classList.remove('down'));
+      window.addEventListener('click', e => { if(e.pointerType !== 'touch' && !e.target.closest('input,textarea,a,button')) pop(e.clientX, e.clientY); });
+      document.documentElement.addEventListener('pointerleave', () => h.classList.remove('on'));
+    }
+
+    /* touch: heart follows the finger (floats just above it), pops on tap */
+    const OFFSET_Y = -38;
+    function place(t){
+      h.style.transform = 'translate3d(' + t.clientX + 'px,' + (t.clientY + OFFSET_Y) + 'px,0)';
+    }
+    let lastPop = 0;
+    function pop(x, y){
+      const now = Date.now();
+      if(now - lastPop < 120) return;   /* dedupe touch + pointer events */
+      lastPop = now;
+      if(reduce){
+        const r = document.createElement('div');
+        r.className = 'heart-ring';
+        r.style.transform = 'translate3d('+x+'px,'+y+'px,0)';
+        document.body.appendChild(r);
+        r.animate([{opacity:.9},{opacity:0}],{duration:400}).onfinish = () => r.remove();
+        return;
+      }
+      const ring = document.createElement('div');
+      ring.className = 'heart-ring';
+      document.body.appendChild(ring);
+      ring.animate(
+        [{transform:'translate3d('+x+'px,'+y+'px,0) scale(.3)',opacity:.9},
+         {transform:'translate3d('+x+'px,'+y+'px,0) scale(1.6)',opacity:0}],
+        {duration:520,easing:'ease-out'}).onfinish = () => ring.remove();
+      for(let i = 0; i < 5; i++){
+        const el = document.createElement('div');
+        el.className = 'heart-pop';
+        el.innerHTML = '<svg viewBox="0 0 24 24">' + heartPath + '</svg>';
+        document.body.appendChild(el);
+        const dx = (Math.random() - .5) * 90, dy = -(40 + Math.random() * 70), s = .6 + Math.random() * .7;
+        el.animate(
+          [{transform:'translate3d('+x+'px,'+y+'px,0) scale(.2)',opacity:1},
+           {transform:'translate3d('+(x+dx)+'px,'+(y+dy)+'px,0) scale('+s+')',opacity:0}],
+          {duration:700 + Math.random() * 400,easing:'cubic-bezier(.2,.7,.3,1)'}).onfinish = () => el.remove();
+      }
+    }
+    function show(t){
+      clearTimeout(hideTimer);
+      h.classList.add('touch','on');
+      h.classList.remove('text');
+      place(t);
+    }
+    function hideSoon(){
+      clearTimeout(hideTimer);
+      h.classList.remove('down');
+      hideTimer = setTimeout(() => h.classList.remove('on'), 450);
+    }
+    window.addEventListener('touchstart', e => {
+      const t = e.touches[0];
+      show(t);
+      h.classList.add('down');
+      if(!e.target.closest('input,textarea')) pop(t.clientX, t.clientY);
+      root.style.setProperty('--mx', t.clientX + 'px');
+      root.style.setProperty('--my', t.clientY + 'px');
+    }, {passive:true});
+    window.addEventListener('touchmove', e => {
+      const t = e.touches[0];
+      show(t);
+      root.style.setProperty('--mx', t.clientX + 'px');
+      root.style.setProperty('--my', t.clientY + 'px');
+    }, {passive:true});
+    window.addEventListener('pointerdown', e => {
+      if(e.pointerType === 'mouse') return;
+      show(e);
+      h.classList.add('down');
+      if(!e.target.closest('input,textarea')) pop(e.clientX, e.clientY);
+    }, {passive:true});
+    window.addEventListener('pointerup', e => { if(e.pointerType !== 'mouse') hideSoon(); }, {passive:true});
+    window.addEventListener('touchend', hideSoon, {passive:true});
+    window.addEventListener('touchcancel', hideSoon, {passive:true});
+  })();
+
+  window.addEventListener('pointermove', e => {
+    root.style.setProperty('--mx', e.clientX + 'px');
+    root.style.setProperty('--my', e.clientY + 'px');
+  }, {passive:true});
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if(!en.isIntersecting) return;
+      en.target.classList.add('in');
+      en.target.querySelectorAll('[data-count]').forEach(el => {
+        const end = +el.dataset.count, suf = el.dataset.suffix || '';
+        const t0 = performance.now(), dur = 1200;
+        (function tick(t){
+          const p = Math.min((t - t0) / dur, 1);
+          el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + suf;
+          if(p < 1) requestAnimationFrame(tick);
+        })(t0);
+      });
+      io.unobserve(en.target);
+    });
+  }, {threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  const links = [...document.querySelectorAll('nav ul a')];
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if(!en.isIntersecting) return;
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id));
+    });
+  }, {rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('section[id]').forEach(el => spy.observe(el));
+
+  /* Catch a star */
+  (function(){
+    const sky = document.getElementById('sky'), cv = document.getElementById('skyc'),
+          msg = document.getElementById('msg'), cnt = document.getElementById('cnt'),
+          ctx = cv.getContext('2d');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const words = [
+      'Start somewhere.',
+      'Take chances.',
+      'Be kind.',
+      'The best ideas tend to show up on a walk. 🌿',
+      'Coffee first, code second. ☕',
+      'Chronos plans your tasks around your energy. ⏱️',
+      'Started at NUST in 2025. Still just getting started.',
+      'Failed ideas teach a lot. That is what Failfolio is for. 🚀',
+      'Every big project began as one small idea.',
+      'Four languages so far. The next one is up to you.',
+      'Say hi: zainabparveen9050@gmail.com'
+    ];
+    let order = [], W = 0, H = 0, dpr = 1, broken = 0, running = false, last = 0;
+    const stars = [], bits = [], dots = [];
+    const rnd = (a, b) => a + Math.random() * (b - a);
+
+    function nextWord(){
+      if(!order.length) order = words.map((_, i) => i).sort(() => Math.random() - .5);
+      return words[order.pop()];
+    }
+    function size(){
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      W = sky.clientWidth; H = sky.clientHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      dots.length = 0;
+      for(let i = 0; i < 70; i++) dots.push({x: rnd(0, W), y: rnd(0, H), r: rnd(.4, 1.3), p: rnd(0, 6.28)});
+    }
+    function spawn(){
+      const r = rnd(13, 24), sp = reduce ? 0 : rnd(.18, .5), a = rnd(0, 6.28);
+      stars.push({x: rnd(r, W - r), y: rnd(r, H * .75), r, vx: Math.cos(a) * sp * 60, vy: Math.sin(a) * sp * 60,
+                  rot: rnd(0, 6.28), spin: reduce ? 0 : rnd(-.6, .6), p: rnd(0, 6.28)});
+    }
+    function drawStar(s, t){
+      const pulse = 1 + Math.sin(t / 500 + s.p) * .08;
+      ctx.save(); ctx.translate(s.x, s.y); ctx.rotate(s.rot); ctx.scale(pulse, pulse);
+      ctx.beginPath();
+      for(let i = 0; i < 10; i++){
+        const rad = i % 2 ? s.r * .45 : s.r, ang = Math.PI * i / 5 - Math.PI / 2;
+        ctx.lineTo(Math.cos(ang) * rad, Math.sin(ang) * rad);
+      }
+      ctx.closePath();
+      ctx.shadowColor = '#00e5ff'; ctx.shadowBlur = 18;
+      ctx.fillStyle = '#00e5ff'; ctx.fill();
+      ctx.shadowBlur = 0; ctx.fillStyle = '#c9f9ff'; ctx.scale(.45, .45); ctx.fill();
+      ctx.restore();
+    }
+    function frame(t){
+      if(!running) return;
+      const dt = Math.min((t - last) / 1000, .05); last = t;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#b8f4ff';
+      dots.forEach(d => { ctx.globalAlpha = .25 + .45 * Math.abs(Math.sin(t / 1200 + d.p)); ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, 6.28); ctx.fill(); });
+      ctx.globalAlpha = 1;
+      stars.forEach(s => {
+        s.x += s.vx * dt; s.y += s.vy * dt; s.rot += s.spin * dt;
+        if(s.x < s.r || s.x > W - s.r){ s.vx *= -1; s.x = Math.max(s.r, Math.min(W - s.r, s.x)); }
+        if(s.y < s.r || s.y > H - s.r){ s.vy *= -1; s.y = Math.max(s.r, Math.min(H - s.r, s.y)); }
+        drawStar(s, t);
+      });
+      for(let i = bits.length - 1; i >= 0; i--){
+        const b = bits[i]; b.life -= dt * 1.4;
+        if(b.life <= 0){ bits.splice(i, 1); continue; }
+        b.x += b.vx * dt; b.y += b.vy * dt; b.vy += 120 * dt;
+        ctx.globalAlpha = b.life; ctx.fillStyle = b.c;
+        ctx.beginPath(); ctx.arc(b.x, b.y, b.r * b.life + .4, 0, 6.28); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(frame);
+    }
+    function pick(e){
+      const rect = cv.getBoundingClientRect(), x = e.clientX - rect.left, y = e.clientY - rect.top;
+      let hit = -1, best = 1e9;
+      stars.forEach((s, i) => { const d = Math.hypot(s.x - x, s.y - y); if(d < s.r * 1.8 && d < best){ best = d; hit = i; } });
+      return hit;
+    }
+    function breakStar(i){
+      const s = stars.splice(i, 1)[0];
+      for(let k = 0; k < 26; k++){
+        const a = rnd(0, 6.28), v = rnd(40, 220);
+        bits.push({x: s.x, y: s.y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 40, r: rnd(1.5, 3.5), life: rnd(.6, 1), c: k % 3 ? '#00e5ff' : '#e8fcff'});
+      }
+      broken++; cnt.textContent = broken + ' broken';
+      msg.classList.add('swap');
+      setTimeout(() => { msg.textContent = nextWord(); msg.classList.remove('swap'); }, 220);
+      setTimeout(spawn, 1100);
+      if(!running) { running = true; last = performance.now(); requestAnimationFrame(frame); }
+    }
+    cv.addEventListener('pointerdown', e => { const i = pick(e); if(i > -1) breakStar(i); });
+    cv.addEventListener('pointermove', e => { cv.style.cursor = pick(e) > -1 ? 'pointer' : 'default'; });
+
+    size();
+    for(let i = 0; i < (W < 500 ? 6 : 9); i++) spawn();
+    new ResizeObserver(() => { size(); stars.forEach(s => { s.x = Math.min(s.x, W - s.r); s.y = Math.min(s.y, H - s.r); }); }).observe(sky);
+    new IntersectionObserver(es => {
+      const on = es[0].isIntersecting;
+      if(on && !running){ running = true; last = performance.now(); requestAnimationFrame(frame); }
+      else if(!on) running = false;
+    }).observe(sky);
+  })();
+</script>
+</body>
+</html>
